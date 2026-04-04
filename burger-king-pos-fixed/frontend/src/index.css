@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================
+   CSS Variables — Dark Mode (default)
+   ===================================================== */
+:root {
+  --bk-dark:       13 8 5;       /* #0D0805 */
+  --bk-dark-2:     26 15 8;      /* #1A0F08 */
+  --bk-dark-3:     38 21 9;      /* #261509 */
+  --bk-cream:      255 248 231;  /* #FFF8E7 */
+  --bk-cream-dark: 245 230 200;  /* #F5E6C8 */
+}
+
+/* =====================================================
+   CSS Variables — Light Mode
+   ===================================================== */
+html.light-mode {
+  --bk-dark:       250 244 232;  /* warm off-white bg */
+  --bk-dark-2:     240 230 215;  /* card bg */
+  --bk-dark-3:     228 215 198;  /* deeper card */
+  --bk-cream:      44 24 16;     /* #2C1810 dark text */
+  --bk-cream-dark: 74 44 26;     /* #4A2C1A secondary text */
+}
+
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: rgb(var(--bk-dark));
+    color: rgb(var(--bk-cream));
+    font-family: 'Nunito', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: rgb(var(--bk-dark-2)); }
+  ::-webkit-scrollbar-thumb { background: #C8962A; border-radius: 3px; }
+}
+
+/* Light mode: tone down the grain overlay */
+html.light-mode body::before {
+  opacity: 0.06 !important;
+}
+
+@layer components {
+  .btn-gold {
+    @apply bg-gold-gradient text-bk-dark font-heading font-bold uppercase tracking-widest
+           px-6 py-3 rounded-full shadow-gold hover:shadow-gold-lg
+           transition-all duration-300 hover:scale-105 active:scale-95;
+  }
+  .btn-outline-gold {
+    @apply border-2 border-bk-gold text-bk-gold font-heading font-bold uppercase tracking-widest
+           px-6 py-3 rounded-full hover:bg-bk-gold hover:text-bk-dark
+           transition-all duration-300;
+  }
+  .card-dark {
+    @apply bg-bk-dark-2 border border-bk-brown-light/30 rounded-2xl overflow-hidden
+           hover:border-bk-gold/40 transition-all duration-300;
+  }
+  .section-title {
+    @apply font-heading text-3xl md:text-4xl font-bold text-bk-yellow uppercase tracking-wider;
+  }
+  .gold-text {
+    @apply bg-clip-text text-transparent bg-gold-gradient;
+  }
+  .nav-link {
+    @apply font-heading text-sm uppercase tracking-wider text-bk-cream/70
+           hover:text-bk-yellow transition-colors duration-200;
+  }
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+/* Shimmer animation */
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(200,150,42,0.15) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s linear infinite;
+}
+
+/* Custom animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.6s ease forwards; }
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.scale-in { animation: scaleIn 0.4s ease forwards; }
+
+/* Flame flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.8; }
+}
+.flame { animation: flicker 1.5s ease-in-out infinite; }
+
+/* Badge pulse */
+.badge-pulse { animation: pulseGold 2s ease-in-out infinite; }
+
+/* Theme toggle button smooth transition */
+.theme-toggle {
+  transition: all 0.3s ease;
+}

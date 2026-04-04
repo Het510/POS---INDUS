@@ -1,0 +1,15 @@
+{
+  "name": "bk-crown-pos",
+  "version": "1.0.0",
+  "description": "BK Crown - Full Stack Restaurant POS",
+  "scripts": {
+    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm start\"",
+    "start": "cd backend && npm start",
+    "seed": "cd backend && node seed.js",
+    "build": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
